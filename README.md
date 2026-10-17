@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Grievance Triage Desk (Lite, with OCR)
 
 Prototype for typed and scanned complaints using TF-IDF + Logistic Regression, Tesseract OCR, FastAPI, SQLite, and Streamlit.
@@ -58,3 +59,6 @@ Run tests: `pytest -q`
 
 ## AI tools
 AI coding assistance was used to scaffold and review project structure, code, tests, and documentation. Review, run, debug, and understand every part before submission.
+=======
+# Grievance-Triage-Desk
+>>>>>>> fe9805794d93b29d07b461da465818e68ae9e0e5
