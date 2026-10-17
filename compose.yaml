@@ -1,0 +1,38 @@
+services:
+  api:
+    build: .
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      ARTIFACT_DIR: /app/artifacts
+      DB_PATH: /app/runtime/grievances.sqlite3
+      STAFF_USERNAME: ${STAFF_USERNAME:?Set STAFF_USERNAME in .env}
+      STAFF_PASSWORD: ${STAFF_PASSWORD:?Set STAFF_PASSWORD in .env}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./runtime:/app/runtime
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build: .
+    command: ["streamlit", "run", "frontend/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+    environment:
+      API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  trainer:
+    build: .
+    command: ["python", "-m", "scripts.train"]
+    profiles: ["training"]
+    volumes:
+      - ./data:/app/data
+      - ./artifacts:/app/artifacts
