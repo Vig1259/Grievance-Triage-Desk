@@ -38,9 +38,14 @@ API docs: http://127.0.0.1:8001/docs; UI: http://localhost:8501.
 ## Run with Docker
 Requires Docker Desktop with Compose and internet access for the first training run.
 
-1. `docker compose build`
-2. `docker compose --profile training run --rm trainer`
-3. `docker compose up`
+1.Build and start the application by running:
+docker compose up --build
+
+2.Open the website in your browser:
+http://localhost:8501
+
+3.Stop the application by pressing Ctrl+C in the terminal, then run:
+docker compose down
 
 Open http://localhost:8501 for the UI and http://localhost:8001/docs for the API. The `artifacts` and `runtime` folders persist the model and SQLite database on the host.
 
