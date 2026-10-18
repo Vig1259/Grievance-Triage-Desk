@@ -39,13 +39,21 @@ API docs: http://127.0.0.1:8001/docs; UI: http://localhost:8501.
 Requires Docker Desktop with Compose and internet access for the first training run.
 
 1.Build and start the application by running:
-docker compose up --build
+`docker compose up --build`
 
 2.Open the website in your browser:
 http://localhost:8501
 
 3.Stop the application by pressing Ctrl+C in the terminal, then run:
-docker compose down
+`docker compose down`
+
+4. Train the model if it is missing
+If the application reports that `artifacts/router.joblib` cannot be found, train the model inside the running API container:
+`docker compose exec -e PYTHONPATH=/app api python scripts/train.py`
+If the API container is not running, start the services first:
+`docker compose up -d --build`
+Then run the training command above.
+Refresh the frontend after training completes.
 
 Open http://localhost:8501 for the UI and http://localhost:8001/docs for the API. The `artifacts` and `runtime` folders persist the model and SQLite database on the host.
 
